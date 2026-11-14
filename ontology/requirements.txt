@@ -1,6 +1,0 @@
-# Python 3.11+ (tomllib). HermiT (via owlready2) also needs a Java runtime;
-# without one, run scripts/check.py --skip-reasoner.
-rdflib>=7.0
-pyshacl>=0.26
-pyoxigraph>=0.5
-owlready2>=0.47
