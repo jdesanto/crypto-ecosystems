@@ -1,0 +1,14 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# G4. A grouping whose criterion is a class PROPOSES that type for members that lack it.
+#     Proposals are annotations for review, never asserted types.
+CONSTRUCT { ?member ceo:proposedType ?class }
+WHERE {
+  ?grouping ceo:groupingCriterion ?class ; ceo:hasSubEcosystem ?member .
+  ?class a owl:Class .
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:EcosystemGrouping }
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ?class }
+}

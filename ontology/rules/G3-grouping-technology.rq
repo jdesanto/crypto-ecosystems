@@ -1,0 +1,14 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# G3. A member of a grouping whose criterion is another technology (framework, standard) uses it.
+CONSTRUCT { ?member ceo:usesTechnology ?tech }
+WHERE {
+  ?grouping ceo:groupingCriterion ?tech ; ceo:hasSubEcosystem ?member .
+  VALUES ?k { ceo:Software ceo:Specification }
+  ?tech a/rdfs:subClassOf* ?k .
+  FILTER NOT EXISTS { ?tech a/rdfs:subClassOf* ceo:ExecutionEnvironment }
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:EcosystemGrouping }
+}

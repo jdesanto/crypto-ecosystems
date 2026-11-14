@@ -1,0 +1,16 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# EVM networks (the defined class ceo:EVMCompatibleNetwork, written as a query so no reasoner is needed).
+SELECT ?network ?kind ?caip2 ?settlesOn
+WHERE {
+  ?n ceo:supportsExecutionEnvironment tech:evm ; rdfs:label ?network ; a ?k .
+  VALUES ?k { ceo:Layer1 ceo:Layer2 ceo:Rollup ceo:OptimisticRollup ceo:ZKRollup ceo:Optimium ceo:Validium ceo:Sidechain }
+  BIND(STRAFTER(STR(?k), "#") AS ?kind)
+  OPTIONAL { ?n ceo:caip2 ?caip2 }
+  OPTIONAL { ?n ceo:settlesOn/rdfs:label ?settlesOn }
+}
+ORDER BY ?kind ?network

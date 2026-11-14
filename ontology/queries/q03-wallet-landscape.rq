@@ -1,0 +1,16 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# Everything in the wallet business, from curated types and from the "Wallet (Category)" grouping.
+SELECT ?name ?kind (GROUP_CONCAT(DISTINCT ?net; separator=", ") AS ?supportsNetworks)
+WHERE {
+  { ?w a ceo:Wallet } UNION { ?w ceo:hasCategory cat:Wallet }
+  ?w rdfs:label ?name .
+  OPTIONAL { ?w a ?k . FILTER(STRSTARTS(STR(?k), STR(ceo:)) && ?k != ceo:Ecosystem) BIND(STRAFTER(STR(?k), "#") AS ?kind) }
+  OPTIONAL { ?w ceo:supportsNetwork/rdfs:label ?net }
+}
+GROUP BY ?name ?kind
+ORDER BY ?kind ?name

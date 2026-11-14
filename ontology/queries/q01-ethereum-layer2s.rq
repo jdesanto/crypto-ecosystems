@@ -1,0 +1,19 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# Layer 2s settling on Ethereum, with explicitly listed repositories and code-host accounts.
+# Repository counts need the full graph (query.py --full).
+SELECT ?layer2 ?kind ?chainId (COUNT(DISTINCT ?repo) AS ?repos) (COUNT(DISTINCT ?account) AS ?accounts)
+WHERE {
+  ?n ceo:settlesOn eco:ethereum ; rdfs:label ?layer2 ; a ?k .
+  ?k rdfs:subClassOf* ceo:Layer2 .
+  BIND(STRAFTER(STR(?k), "#") AS ?kind)
+  OPTIONAL { ?n ceo:evmChainId ?chainId }
+  OPTIONAL { ?n ceo:hasRepository ?repo }
+  OPTIONAL { ?n ceo:hasCodeHostAccount ?account }
+}
+GROUP BY ?layer2 ?kind ?chainId
+ORDER BY DESC(?accounts) ?layer2

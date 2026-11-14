@@ -1,0 +1,12 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# D2. Former names embedded in titles, e.g. "Irys (prev Bundlr)", "Balmy (formerly Mean Finance)".
+CONSTRUCT { ?e ceo:formerName ?old }
+WHERE {
+  ?e a ceo:Ecosystem ; rdfs:label ?title .
+  FILTER REGEX(?title, "\\((formerly|prev\\.?|previously) [^)]+\\)", "i")
+  BIND(REPLACE(?title, "^.*\\((formerly|prev\\.?|previously) ([^)]+)\\).*$", "$2", "i") AS ?old)
+}

@@ -1,0 +1,28 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# What "the Ethereum ecosystem" contains under different aggregation policies.
+# The raw tree is what the source taxonomy counts; the typed policies are only
+# possible once links are typed. Repository counts need --full.
+SELECT ?policy (COUNT(DISTINCT ?e) AS ?ecosystems) (COUNT(DISTINCT ?repo) AS ?repos)
+WHERE {
+  {
+    BIND("1 raw sub-ecosystem tree" AS ?policy)
+    ?e ceo:subEcosystemOf* eco:ethereum .
+  } UNION {
+    BIND("2 any typed rollup relation" AS ?policy)
+    ?e (ceo:settlesOn|ceo:deployedOn|ceo:homeNetwork|ceo:issuedOn|ceo:connectsNetwork|ceo:supportsNetwork|ceo:clientOf|ceo:buildsOn|ceo:securedBy|ceo:sidechainOf|ceo:memberOfFamily|ceo:testnetOf|ceo:partOf)* eco:ethereum .
+  } UNION {
+    BIND("3 settlement + deployment only" AS ?policy)
+    ?e (ceo:settlesOn|ceo:deployedOn|ceo:homeNetwork|ceo:issuedOn)* eco:ethereum .
+  } UNION {
+    BIND("4 settlement only (L2s, L3s)" AS ?policy)
+    ?e ceo:settlesOn* eco:ethereum .
+  }
+  OPTIONAL { ?e ceo:hasRepository ?repo }
+}
+GROUP BY ?policy
+ORDER BY ?policy

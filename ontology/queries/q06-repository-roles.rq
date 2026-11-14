@@ -1,0 +1,12 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+# Repositories per normalised role, and which raw tag strings were folded into each role
+# by the labels in vocab/repo-roles.ttl. Needs --full.
+SELECT ?role (COUNT(DISTINCT ?repo) AS ?repos) (GROUP_CONCAT(DISTINCT ?tag; separator=" | ") AS ?fromRawTags)
+WHERE {
+  ?repo ceo:hasRole ?c ; ceo:rawTag ?tag .
+  ?c skos:prefLabel ?role ; (skos:prefLabel|skos:altLabel|skos:hiddenLabel) ?label .
+  FILTER(LCASE(STR(?label)) = LCASE(?tag))
+}
+GROUP BY ?role
+ORDER BY DESC(?repos)

@@ -1,0 +1,13 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# Fork and succession lineage, transitively (what ceo:derivedFrom infers under a reasoner).
+SELECT ?descendant ?ancestor
+WHERE {
+  ?d (ceo:forkOf|ceo:successorOf)+ ?a .
+  ?d rdfs:label ?descendant . ?a rdfs:label ?ancestor .
+}
+ORDER BY ?ancestor ?descendant

@@ -1,0 +1,119 @@
+@prefix role: <https://w3id.org/cryptoeco/vocab/repo-role/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+# Repository roles: WHAT a repository is. Normalises the 127 free-text tag
+# values in data/ecosystems (5,274 tagged repo entries) into ~20 concepts.
+#
+# Resolution (scripts/toml_to_rdf.py): a raw tag is matched case-insensitively
+# against prefLabel / altLabel / hiddenLabel of this scheme AND of
+# vocab/categories.ttl; '#', '-' and '_' count as spaces, so upstream-style
+# tags such as "#developer-tool" resolve too. Role matches become ceo:hasRole,
+# category matches ceo:hasCategory. One tag may hit both, e.g.
+# "Chains and Pallets, DeFi" -> role:ProtocolImplementation + cat:DeFi.
+# The raw string is always kept as ceo:rawTag.
+
+role:scheme
+    a skos:ConceptScheme , owl:NamedIndividual ;
+    skos:prefLabel "Repository roles"@en ;
+    skos:hasTopConcept role:ProtocolImplementation , role:SmartContracts , role:Dapp , role:Wallet ,
+        role:Library , role:DeveloperTool , role:NodeClient , role:DevOps , role:Infrastructure ,
+        role:Documentation , role:Website , role:UserInterface , role:Research , role:Specification ,
+        role:Hardware , role:Bot , role:Integration , role:Testnet , role:LanguageImplementation .
+
+role:ProtocolImplementation a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Protocol implementation"@en ;
+    skos:altLabel "Protocol"@en , "Blockchain"@en , "Mainnet"@en , "Chains and Pallets"@en ;
+    skos:hiddenLabel "Chains and Pallets, Governance/DAO"@en , "Chains and Pallets, Other"@en ,
+        "Chains and Pallets, Gaming"@en , "Chains and Pallets, Oracle"@en , "Chains and Pallets, Music Industry"@en ,
+        "Chains and Pallets, Privacy"@en , "Chains and Pallets, Scalable Transactions"@en ,
+        "Chains and Pallets, Messaging"@en , "Chains and Pallets, Name Service"@en , "Chains and Pallets, DeFi"@en ,
+        "Chains and Pallets, UTXO"@en , "Chains and Pallets, Randomness"@en , "Chains and Pallets, Bridges"@en ,
+        "Chains and Pallets, ZKP"@en , "Chains and Pallets, Data Availability"@en ,
+        "Chains and Pallets, Smart contract chains"@en ;
+    skos:scopeNote "The source uses \"Protocol\" for 88% of all tagged repos, mostly core protocol code."@en .
+
+role:SmartContracts a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Smart contracts"@en ;
+    skos:altLabel "Contracts"@en , "System Contracts"@en , "Periphery"@en ;
+    skos:hiddenLabel "ink Smart Contracts, DAO"@en , "ink Smart Contracts, DeFi"@en ,
+        "ink Smart Contracts, Governance"@en , "ink Smart Contracts, Other"@en .
+
+role:Dapp a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Dapp"@en ; skos:altLabel "Decentralized application"@en .
+
+role:Wallet a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Wallet"@en ; skos:altLabel "Wallets"@en ;
+    skos:hiddenLabel "Wallets, Burner Wallets/Faucet/Gifts"@en .
+
+role:Library a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Library"@en ; skos:altLabel "Utilities"@en , "Client library"@en ;
+    skos:hiddenLabel "Tools, APIs, and Languages, Client Libraries"@en , "Networking, SCALE Codec"@en .
+
+role:SDK a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:broader role:Library ;
+    skos:prefLabel "SDK"@en .
+
+role:DeveloperTool a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Developer tool"@en ;
+    skos:altLabel "Developer Tools"@en , "Tool"@en , "Toolkit"@en ;
+    skos:hiddenLabel "Tools, APIs, and Languages, Easy Smart Contract Development"@en .
+
+role:Framework a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:broader role:DeveloperTool ;
+    skos:prefLabel "Framework"@en .
+
+role:Testing a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:broader role:DeveloperTool ;
+    skos:prefLabel "Testing"@en ; skos:hiddenLabel "Host, Testing"@en .
+
+role:FormalVerification a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:broader role:DeveloperTool ;
+    skos:prefLabel "Formal verification"@en ; skos:altLabel "Formal Methods"@en .
+
+role:NodeClient a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Node client"@en ;
+    skos:altLabel "Client"@en , "Off-chain clients"@en , "Node Agent"@en , "Light client"@en ;
+    skos:hiddenLabel "Host, Light Client"@en , "lotus"@en .
+
+role:DevOps a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "DevOps"@en ;
+    skos:altLabel "Monitoring"@en , "Mainnet tools"@en , "Testnet tools"@en , "Node operations"@en ;
+    skos:hiddenLabel "Network Maintenance Tools, Deployment Tools"@en ,
+        "Network Maintenance Tools, High availability setup"@en ,
+        "Network Maintenance Tools, Nominator Tools"@en , "Baking"@en .
+
+role:Infrastructure a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Infrastructure"@en ; skos:altLabel "Backend"@en ;
+    skos:hiddenLabel "Infrastrcture"@en .
+
+role:Documentation a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Documentation"@en ;
+    skos:altLabel "Docs"@en , "Document"@en , "Resources"@en ;
+    skos:hiddenLabel "DEcision Documents"@en .
+
+role:Website a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Website"@en .
+
+role:UserInterface a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "User interface"@en ;
+    skos:altLabel "UIkit"@en , "Mobile"@en , "Android"@en ;
+    skos:hiddenLabel "User Interface, Validator Dashboards"@en , "User Interface, Governance Dashboards"@en ,
+        "User Interface, Parachain/Crowdloan"@en .
+
+role:Research a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Research"@en ; skos:altLabel "R&D"@en , "Analysis"@en , "Tokenomics"@en .
+
+role:Specification a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Specification"@en ; skos:altLabel "Standards"@en , "RFC"@en .
+
+role:Hardware a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Hardware"@en .
+
+role:Bot a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Bot"@en ; skos:altLabel "Bots"@en .
+
+role:Integration a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Integration"@en ; skos:altLabel "Adapter"@en .
+
+role:Testnet a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Testnet"@en .
+
+role:LanguageImplementation a skos:Concept , owl:NamedIndividual ; skos:inScheme role:scheme ; skos:topConceptOf role:scheme ;
+    skos:prefLabel "Language implementation"@en ; skos:altLabel "Language"@en , "Compiler"@en .

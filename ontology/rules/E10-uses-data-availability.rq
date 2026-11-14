@@ -1,0 +1,11 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# E10. A layer 2 listed under a data-availability layer uses it for data availability.
+CONSTRUCT { ?child ceo:usesDataAvailability ?parent }
+WHERE {
+  ?parent ceo:hasSubEcosystem ?child ; ceo:hasCategory cat:DataAvailability .
+  ?child a/rdfs:subClassOf* ceo:Layer2 .
+}

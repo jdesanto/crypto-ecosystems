@@ -1,0 +1,16 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# G2. A member of a grouping whose criterion is an execution environment supports it.
+#     Languages are skipped (they use ceo:compilesTo), as are organizations and assets.
+CONSTRUCT { ?member ceo:supportsExecutionEnvironment ?env }
+WHERE {
+  ?grouping ceo:groupingCriterion ?env ; ceo:hasSubEcosystem ?member .
+  ?env a/rdfs:subClassOf* ceo:ExecutionEnvironment .
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:EcosystemGrouping }
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:Organization }
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:Asset }
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:Specification }
+}

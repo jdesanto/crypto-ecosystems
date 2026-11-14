@@ -1,0 +1,12 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# G1. A member of a grouping whose criterion is a category concept has that category.
+CONSTRUCT { ?member ceo:hasCategory ?concept }
+WHERE {
+  ?grouping ceo:groupingCriterion ?concept ; ceo:hasSubEcosystem ?member .
+  ?concept a skos:Concept .
+  FILTER NOT EXISTS { ?member a/rdfs:subClassOf* ceo:EcosystemGrouping }
+}

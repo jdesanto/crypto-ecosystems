@@ -14,3 +14,7 @@
 .gitsigners
 
 .cargo
+
+# Generated ontology artifacts
+ontology/build/
+__pycache__/

@@ -33,3 +33,12 @@ validate:  ## Validate the ecosystems toml files
 .PHONY: sort
 sort:  ## Sort and clean up unsorted toml files
 	cargo run --release -- sort data/
+
+.PHONY: ontology-rdf
+ontology-rdf:  ## Convert the ecosystem TOML files to RDF (ontology/build/)
+	python3 ontology/scripts/toml_to_rdf.py --no-repos
+	python3 ontology/scripts/toml_to_rdf.py
+
+.PHONY: ontology-check
+ontology-check:  ## Validate the ontology, overlay and rules; write the curation queue
+	python3 ontology/scripts/check.py --rebuild

@@ -1,0 +1,16 @@
+PREFIX ceo:  <https://w3id.org/cryptoeco/ontology#>
+PREFIX eco:  <https://w3id.org/cryptoeco/id/ecosystem/>
+PREFIX cat:  <https://w3id.org/cryptoeco/vocab/category/>
+PREFIX tech: <https://w3id.org/cryptoeco/id/technology/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# Untyped taxonomy nodes with the most sub-ecosystems: typing these unlocks the most derived links.
+SELECT ?title (COUNT(?child) AS ?children) ?file
+WHERE {
+  ?e a ceo:Ecosystem ; rdfs:label ?title ; ceo:sourceFile ?file ; ceo:hasSubEcosystem ?child .
+  FILTER NOT EXISTS { ?e a/rdfs:subClassOf* ceo:CryptoEntity }
+  FILTER NOT EXISTS { ?e a/rdfs:subClassOf* ceo:EcosystemGrouping }
+}
+GROUP BY ?title ?file
+ORDER BY DESC(?children)
+LIMIT 25

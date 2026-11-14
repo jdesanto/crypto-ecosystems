@@ -1,0 +1,183 @@
+@prefix cat:  <https://w3id.org/cryptoeco/vocab/category/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Functional categories: WHAT an entity or repository does.
+# Kept as SKOS (not OWL classes) because they are facets that change often and
+# cut across kinds: Chainlink (a protocol) and Band (a chain) are both oracles.
+#
+# Labels double as the tag resolver used by scripts/toml_to_rdf.py:
+# prefLabel / altLabel / hiddenLabel are matched case-insensitively, with '#',
+# '-' and '_' treated as spaces. hiddenLabel holds misspellings and composite
+# grant-category strings found in the raw tags.
+
+cat:scheme
+    a skos:ConceptScheme , owl:NamedIndividual ;
+    skos:prefLabel "Crypto ecosystem functional categories"@en ;
+    skos:hasTopConcept cat:DeFi , cat:Payments , cat:Infrastructure , cat:Cryptography ,
+        cat:Privacy , cat:Consumer , cat:Governance , cat:Wallet , cat:CentralizedExchange ,
+        cat:Custody , cat:Security , cat:Analytics , cat:DeveloperTooling , cat:Education ,
+        cat:AI , cat:DePIN .
+
+# --- DeFi -------------------------------------------------------------------
+
+cat:DeFi a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "DeFi"@en ; skos:altLabel "Decentralized finance"@en ;
+    skos:hiddenLabel "Chains and Pallets, DeFi"@en , "ink Smart Contracts, DeFi"@en .
+
+cat:DEX a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Decentralized exchange"@en ; skos:altLabel "DEX"@en , "AMM"@en .
+
+cat:TradingAggregator a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Trading aggregator"@en ; skos:altLabel "DEX aggregator"@en .
+
+cat:Lending a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Lending"@en ; skos:altLabel "Borrowing"@en .
+
+cat:Derivatives a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Derivatives"@en ; skos:altLabel "Perpetuals"@en , "Options"@en .
+
+cat:Stablecoin a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Stablecoin"@en ; skos:altLabel "Stablecoins"@en .
+
+cat:LiquidStaking a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Liquid staking"@en .
+
+cat:Restaking a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Restaking"@en .
+
+cat:Yield a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Yield"@en ; skos:altLabel "Yield aggregator"@en , "Asset management"@en .
+
+cat:RealWorldAssets a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Real-world assets"@en ; skos:altLabel "RWA"@en .
+
+cat:PredictionMarket a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:DeFi ;
+    skos:prefLabel "Prediction market"@en .
+
+# --- Payments ---------------------------------------------------------------
+
+cat:Payments a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Payments"@en ; skos:altLabel "Payment Processor"@en , "Payment Gateway"@en , "Streaming payments"@en .
+
+# --- Infrastructure ---------------------------------------------------------
+
+cat:Infrastructure a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Infrastructure"@en ; skos:hiddenLabel "Infrastrcture"@en .
+
+cat:Oracle a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Oracle"@en ; skos:altLabel "Oracles"@en ;
+    skos:hiddenLabel "Chains and Pallets, Oracle"@en .
+
+cat:Interoperability a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Interoperability"@en ; skos:altLabel "Bridges & Interoperability"@en .
+
+cat:Bridge a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Interoperability ;
+    skos:prefLabel "Bridge"@en ; skos:altLabel "Bridges"@en ;
+    skos:hiddenLabel "Chains and Pallets, Bridges"@en .
+
+cat:Messaging a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Interoperability ;
+    skos:prefLabel "Cross-chain messaging"@en ;
+    skos:hiddenLabel "Chains and Pallets, Messaging"@en .
+
+cat:DataAvailability a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Data availability"@en ; skos:altLabel "DA"@en ;
+    skos:hiddenLabel "Chains and Pallets, Data Availability"@en .
+
+cat:Storage a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Decentralized storage"@en ; skos:altLabel "Storage"@en , "Decentralized Database"@en .
+
+cat:Compute a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Decentralized compute"@en .
+
+cat:NodeInfrastructure a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Node infrastructure"@en ; skos:altLabel "RPC"@en , "Node provider"@en , "Staking infrastructure"@en .
+
+cat:Indexing a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Indexing"@en ; skos:altLabel "Indexer"@en .
+
+cat:AccountAbstraction a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Account abstraction"@en ; skos:altLabel "Smart accounts"@en .
+
+cat:Identity a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "Identity"@en ; skos:altLabel "Name service"@en ;
+    skos:hiddenLabel "Chains and Pallets, Name Service"@en .
+
+cat:MEV a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Infrastructure ;
+    skos:prefLabel "MEV"@en ; skos:altLabel "Maximal extractable value"@en .
+
+# --- Cryptography & privacy -------------------------------------------------
+
+cat:Cryptography a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Cryptography"@en .
+
+cat:ZeroKnowledge a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Cryptography ;
+    skos:prefLabel "Zero knowledge"@en ;
+    skos:altLabel "ZKP"@en , "Zero-knowledge proofs"@en , "Zero Knowledge Cryptography"@en ;
+    skos:hiddenLabel "Zero Knowlage Proofs"@en , "Chains and Pallets, ZKP"@en .
+
+cat:FHE a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Cryptography ;
+    skos:prefLabel "Fully homomorphic encryption"@en ; skos:altLabel "FHE"@en .
+
+cat:MPC a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Cryptography ;
+    skos:prefLabel "Multi-party computation"@en ; skos:altLabel "MPC"@en .
+
+cat:HardwareAcceleration a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Cryptography ;
+    skos:prefLabel "Hardware acceleration"@en ; skos:altLabel "GPU"@en , "FPGA"@en ;
+    skos:hiddenLabel "Hardware accleration"@en .
+
+cat:Privacy a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Privacy"@en ;
+    skos:hiddenLabel "Chains and Pallets, Privacy"@en .
+
+# --- Consumer ---------------------------------------------------------------
+
+cat:Consumer a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Consumer applications"@en .
+
+cat:NFT a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Consumer ;
+    skos:prefLabel "NFT"@en ; skos:altLabel "NFTs"@en , "Non-fungible tokens"@en .
+
+cat:Gaming a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Consumer ;
+    skos:prefLabel "Gaming"@en ; skos:altLabel "Games"@en ;
+    skos:hiddenLabel "Chains and Pallets, Gaming"@en .
+
+cat:Social a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:broader cat:Consumer ;
+    skos:prefLabel "Social"@en .
+
+# --- Other top concepts -----------------------------------------------------
+
+cat:Governance a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Governance"@en ; skos:altLabel "DAO tooling"@en ;
+    skos:hiddenLabel "Chains and Pallets, Governance/DAO"@en , "ink Smart Contracts, DAO"@en ,
+        "ink Smart Contracts, Governance"@en , "User Interface, Governance Dashboards"@en .
+
+cat:Wallet a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Wallets and key management"@en ; skos:altLabel "Key management"@en , "Multisig"@en ;
+    skos:scopeNote "Category for anything in the wallet business (Ledger, the company). Wallet software is also typed ceo:Wallet."@en .
+
+cat:CentralizedExchange a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Centralized exchange"@en ; skos:altLabel "CEX"@en .
+
+cat:Custody a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Custody"@en .
+
+cat:Security a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Security"@en ; skos:altLabel "Auditing"@en , "Audits"@en .
+
+cat:Analytics a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Analytics"@en ; skos:altLabel "Data"@en , "Stats"@en .
+
+cat:DeveloperTooling a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Developer tooling"@en ;
+    skos:scopeNote "Sector label for organizations and groupings. A repository's role as a tool is role:DeveloperTool."@en .
+
+cat:Education a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "Education"@en ; skos:altLabel "Learning"@en , "Media"@en .
+
+cat:AI a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "AI"@en ; skos:altLabel "Artificial intelligence"@en , "Decentralized AI"@en .
+
+cat:DePIN a skos:Concept , owl:NamedIndividual ; skos:inScheme cat:scheme ; skos:topConceptOf cat:scheme ;
+    skos:prefLabel "DePIN"@en ; skos:altLabel "Decentralized physical infrastructure"@en .
